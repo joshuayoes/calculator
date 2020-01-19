@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dispatch, AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { updateDisplay } from '../redux/actions';
 
@@ -16,9 +15,7 @@ const Button: React.FC<Props> = ({ value, title, dispatch }) => (
     id={title}
     onClick={(): void => dispatch(updateDisplay(value))}
   >
-    {' '}
     {value}
-    {' '}
   </button>
 );
 
