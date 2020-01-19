@@ -1,0 +1,2 @@
+export const UPDATE_DISPLAY = 'UPDATE_DISPLAY';
+export const CLEAR_DISPLAY = 'CLEAR_DISPLAY';
