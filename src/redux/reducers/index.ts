@@ -17,6 +17,12 @@ const intialState = {
 const display: Reducer<State, Action> = (state = intialState, action): State => {
   switch (action.type) {
     case UPDATE_DISPLAY:
+      // if state is initalState, replace it with first input
+      if (state.input === '0') {
+        return {
+          input: action.input,
+        };
+      }
       return {
         input: state.input.concat(action.input),
       };

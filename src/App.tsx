@@ -3,16 +3,18 @@ import { connect } from 'react-redux';
 import './App.scss';
 import buttons from './buttons';
 import Button from './components/Button';
+import { clearDisplay } from './redux/actions';
 
 interface Props {
   input?: string;
+  dispatch: any;
 }
 
-const App: React.FC<Props> = ({ input }) => (
+const App: React.FC<Props> = ({ input, dispatch }) => (
   <main>
     <section id="display">{ input }</section>
     <button type="button" id="equals">=</button>
-    <button type="button" id="clear">AC</button>
+    <button type="button" id="clear" onClick={(): void => dispatch(clearDisplay())}>AC</button>
     {buttons.map((button) => <Button value={button.value} title={button.title} />)}
   </main>
 );
