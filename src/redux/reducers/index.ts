@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { UPDATE_DISPLAY, CLEAR_DISPLAY } from '../actionTypes';
+import { INPUT_NUMBER, CLEAR_DISPLAY, INPUT_DECIMAL } from '../actionTypes';
 
 interface Action {
   type: string;
@@ -16,11 +16,20 @@ const intialState = {
 
 const display: Reducer<State, Action> = (state = intialState, action): State => {
   switch (action.type) {
-    case UPDATE_DISPLAY:
+    case INPUT_NUMBER:
       // if state is initalState, replace it with first input
       if (state.input === '0') {
         return {
           input: action.input,
+        };
+      }
+      return {
+        input: state.input.concat(action.input),
+      };
+    case INPUT_DECIMAL:
+      if (state.input.includes('.')) {
+        return {
+          input: state.input,
         };
       }
       return {

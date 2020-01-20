@@ -15,7 +15,13 @@ const App: React.FC<Props> = ({ input, dispatch }) => (
     <section id="display">{ input }</section>
     <button type="button" id="equals">=</button>
     <button type="button" id="clear" onClick={(): void => dispatch(clearDisplay())}>AC</button>
-    {buttons.map((button) => <Button value={button.value} title={button.title} />)}
+    {buttons.map((button) => (
+      <Button
+        value={button.value}
+        title={button.title}
+        action={button.action}
+      />
+    ))}
   </main>
 );
 

@@ -1,2 +1,3 @@
-export const UPDATE_DISPLAY = 'UPDATE_DISPLAY';
+export const INPUT_NUMBER = 'INPUT_NUMBER';
+export const INPUT_DECIMAL = 'INPUT_DECIMAL';
 export const CLEAR_DISPLAY = 'CLEAR_DISPLAY';

@@ -1,7 +1,12 @@
-import { UPDATE_DISPLAY, CLEAR_DISPLAY } from './actionTypes';
+import { INPUT_NUMBER, CLEAR_DISPLAY, INPUT_DECIMAL } from './actionTypes';
 
-export const updateDisplay = (input: string): object => ({
-  type: UPDATE_DISPLAY,
+export const inputNumber = (input: string): object => ({
+  type: INPUT_NUMBER,
+  input,
+});
+
+export const inputDecimal = (input: string): object => ({
+  type: INPUT_DECIMAL,
   input,
 });
 
