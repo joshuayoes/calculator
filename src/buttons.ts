@@ -1,4 +1,4 @@
-import { inputNumber, clearDisplay, inputDecimal } from './redux/actions';
+import { inputNumber, inputOperator, inputDecimal } from './redux/actions';
 
 const buttons = [
   {
@@ -54,18 +54,22 @@ const buttons = [
   {
     value: '+',
     title: 'add',
+    action: inputOperator('+'),
   },
   {
     value: '-',
     title: 'subtract',
+    action: inputOperator('-'),
   },
   {
     value: 'x',
     title: 'multiply',
+    action: inputOperator('x'),
   },
   {
     value: '/',
     title: 'divide',
+    action: inputOperator('/'),
   },
   {
     value: '.',

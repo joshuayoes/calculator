@@ -4,6 +4,7 @@ import rootReducer from './reducers';
 
 const intialState = {
   input: '0',
+  operator: null,
 };
 
 declare global {

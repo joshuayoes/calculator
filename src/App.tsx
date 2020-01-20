@@ -17,12 +17,14 @@ const App: React.FC<Props> = ({ input, dispatch }) => (
     <button type="button" id="clear" onClick={(): void => dispatch(clearDisplay())}>AC</button>
     {buttons.map((button) => (
       <Button
+        key={button.title}
         value={button.value}
         title={button.title}
         action={button.action}
       />
     ))}
   </main>
+
 );
 
 const mapStateToProps = (state: any): object => ({
