@@ -67,7 +67,37 @@ const display: Reducer<State, Action> = (state = intialState, action): State => 
       };
     case INPUT_OPERATOR:
       // checks to see if input is first operation
-      if (state.previousInput === null || state.operator === null || state.input === '') {
+      if (state.previousInput === null
+          || state.operator === null
+          || state.input === ''
+          || state.input === '-') {
+        // inserts negative operator in front of input
+        if (state.operator !== null && action.operator === '-') {
+          return {
+            ...state,
+            input: action.operator + state.input,
+          };
+        }
+
+        // if input is empty, update operator
+        if (state.input === '') {
+          return {
+            ...state,
+            operator: action.operator,
+          };
+        }
+
+        // if input has subtract and new input,
+        // empty input and update inpyt
+        if (state.input === '-') {
+          return {
+            ...state,
+            input: '',
+            operator: action.operator,
+          };
+        }
+
+        // if update is first operation and not negative
         return {
           input: '',
           previousInput: state.input,
