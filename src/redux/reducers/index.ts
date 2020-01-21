@@ -63,11 +63,22 @@ const display: Reducer<State, Action> = (state = intialState, action): State => 
         input: state.input.concat(action.input),
       };
     case INPUT_OPERATOR:
+      if (state.previousInput === null || state.operator === null || state.input === '') {
+        return {
+          input: '',
+          previousInput: state.input,
+          operator: action.operator,
+        };
+      }
+
+      const operatorResult = calculate(state.previousInput, state.operator, state.input).toString();
+
       return {
         input: '',
-        previousInput: state.input,
+        previousInput: operatorResult,
         operator: action.operator,
       };
+
     case INPUT_EQUALS:
       // if equals is inputed pre-maturely, do nothing
       if (state.previousInput === null || state.operator === null || state.input === '') {
