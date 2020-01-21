@@ -23,18 +23,20 @@ const intialState = {
 };
 
 // helper function for INPUT_OPERATOR and INPUT_EQUALS
-const calculate = (n1: string, operator: string, n2: string): number => {
-  const numberOne: number = parseInt(n1, 10);
-  const numberTwo: number = parseInt(n2, 10);
+// calculates the result of the previousInput and the current input
+// of any operation
+const calculate = (n1: string, operator: string, n2: string): string => {
+  const numberOne: number = parseFloat(n1);
+  const numberTwo: number = parseFloat(n2);
   switch (operator) {
     case '+':
-      return numberOne + numberTwo;
+      return (numberOne + numberTwo).toString();
     case '-':
-      return numberOne - numberTwo;
+      return (numberOne - numberTwo).toString();
     case 'x':
-      return numberOne * numberTwo;
+      return (numberOne * numberTwo).toString();
     case '/':
-      return numberOne / numberTwo;
+      return (numberOne / numberTwo).toString();
     default:
       throw Error('Invalid operator');
   }
@@ -55,6 +57,7 @@ const display: Reducer<State, Action> = (state = intialState, action): State => 
         input: state.input.concat(action.input),
       };
     case INPUT_DECIMAL:
+      // disallows multiple decimals per input
       if (state.input.includes('.')) {
         return state;
       }
@@ -63,6 +66,7 @@ const display: Reducer<State, Action> = (state = intialState, action): State => 
         input: state.input.concat(action.input),
       };
     case INPUT_OPERATOR:
+      // checks to see if input is first operation
       if (state.previousInput === null || state.operator === null || state.input === '') {
         return {
           input: '',
@@ -71,11 +75,11 @@ const display: Reducer<State, Action> = (state = intialState, action): State => 
         };
       }
 
-      const operatorResult = calculate(state.previousInput, state.operator, state.input).toString();
-
+      // allows consecutive operations
+      // i.e. 2 + 2 + 2 = 6
       return {
         input: '',
-        previousInput: operatorResult,
+        previousInput: calculate(state.previousInput, state.operator, state.input),
         operator: action.operator,
       };
 
@@ -85,10 +89,8 @@ const display: Reducer<State, Action> = (state = intialState, action): State => 
         return state;
       }
 
-      const result = calculate(state.previousInput, state.operator, state.input).toString();
-
       return {
-        input: result,
+        input: calculate(state.previousInput, state.operator, state.input),
         previousInput: null,
         operator: null,
       };
