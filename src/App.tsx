@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './App.scss';
 import buttons from './buttons';
 import Button from './components/Button';
-import { clearDisplay } from './redux/actions';
+import { clearDisplay, inputEquals } from './redux/actions';
 
 interface Props {
   input?: string;
@@ -13,7 +13,7 @@ interface Props {
 const App: React.FC<Props> = ({ input, dispatch }) => (
   <main>
     <section id="display">{ input }</section>
-    <button type="button" id="equals">=</button>
+    <button type="button" id="equals" onClick={(): void => dispatch(inputEquals(input))}>=</button>
     <button type="button" id="clear" onClick={(): void => dispatch(clearDisplay())}>AC</button>
     {buttons.map((button) => (
       <Button

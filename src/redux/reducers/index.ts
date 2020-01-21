@@ -1,6 +1,7 @@
+/* eslint-disable no-case-declarations */
 import { Reducer } from 'redux';
 import {
-  INPUT_NUMBER, CLEAR_DISPLAY, INPUT_DECIMAL, INPUT_OPERATOR,
+  INPUT_NUMBER, CLEAR_DISPLAY, INPUT_DECIMAL, INPUT_OPERATOR, INPUT_EQUALS,
 } from '../actionTypes';
 
 interface Action {
@@ -11,12 +12,32 @@ interface Action {
 
 interface State {
   input: string;
+  previousInput: string | null;
   operator: string | null;
 }
 
 const intialState = {
   input: '0',
+  previousInput: null,
   operator: null,
+};
+
+// helper function for INPUT_OPERATOR and INPUT_EQUALS
+const calculate = (n1: string, operator: string, n2: string): number => {
+  const numberOne: number = parseInt(n1, 10);
+  const numberTwo: number = parseInt(n2, 10);
+  switch (operator) {
+    case '+':
+      return numberOne + numberTwo;
+    case '-':
+      return numberOne - numberTwo;
+    case 'x':
+      return numberOne * numberTwo;
+    case '/':
+      return numberOne / numberTwo;
+    default:
+      throw Error('Invalid operator');
+  }
 };
 
 const display: Reducer<State, Action> = (state = intialState, action): State => {
@@ -25,33 +46,45 @@ const display: Reducer<State, Action> = (state = intialState, action): State => 
       // if state is initalState, replace it with first input
       if (state.input === '0') {
         return {
+          ...state,
           input: action.input,
-          operator: state.operator,
         };
       }
       return {
+        ...state,
         input: state.input.concat(action.input),
-        operator: state.operator,
       };
     case INPUT_DECIMAL:
       if (state.input.includes('.')) {
-        return {
-          input: state.input,
-          operator: state.operator,
-        };
+        return state;
       }
       return {
+        ...state,
         input: state.input.concat(action.input),
-        operator: state.operator,
       };
     case INPUT_OPERATOR:
       return {
-        input: state.input,
+        input: '',
+        previousInput: state.input,
         operator: action.operator,
+      };
+    case INPUT_EQUALS:
+      // if equals is inputed pre-maturely, do nothing
+      if (state.previousInput === null || state.operator === null || state.input === '') {
+        return state;
+      }
+
+      const result = calculate(state.previousInput, state.operator, state.input).toString();
+
+      return {
+        input: result,
+        previousInput: null,
+        operator: null,
       };
     case CLEAR_DISPLAY:
       return {
         input: '0',
+        previousInput: null,
         operator: null,
       };
     default:

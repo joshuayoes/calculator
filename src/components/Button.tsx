@@ -5,7 +5,7 @@ interface Props {
   value: string;
   title: string;
   dispatch: any;
-  action?: any;
+  action: any;
 }
 
 const Button: React.FC<Props> = ({
