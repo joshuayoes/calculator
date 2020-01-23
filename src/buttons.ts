@@ -67,7 +67,7 @@ const buttons = [
     action: inputOperator('x'),
   },
   {
-    value: '/',
+    value: '÷',
     title: 'divide',
     action: inputOperator('/'),
   },
